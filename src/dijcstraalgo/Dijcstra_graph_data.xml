@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<graph_matrix>
+<title>Dijcstra</title>
+<meta>
+<vertex count="9" />
+<edge count="17" />
+</meta>
+<data>
+<row id="1">0 23 0 0 0 67 0 10 0</row>
+<row id="2">23 0 14 0 16 12 0 0 0</row>
+<row id="3">0 14 0 3 14 0 0 0 0</row>
+<row id="4">0 0 3 0 14 0 43 0 0</row>
+<row id="5">0 16 14 14 0 23 14 0 0</row>
+<row id="6">67 12 0 0 23 0 23 3 14</row>
+<row id="7">0 0 0 43 14 23 0 0 58</row>
+<row id="8">10 0 0 0 0 3 0 0 4</row>
+<row id="9">0 0 0 0 0 14 58 4 0</row>
+</data>
+</graph_matrix>

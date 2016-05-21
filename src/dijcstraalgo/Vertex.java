@@ -53,20 +53,6 @@ public class Vertex implements Comparable{
         this.routeToMe.add(routeToMe);
         return this;
     }
-    
-    public void deformRouteToMe(int startVertNumber){
-        int index=this.getRouteToMe().size()-1;
-        String startVert = Integer.toString(startVertNumber);
-        
-        ArrayList<String> temp = new ArrayList<>();
-        while(true){
-            temp.add(this.getRouteToMe().get(index));
-            if (this.getRouteToMe().get(index--).equals(startVert))
-                break;
-        }
-        Collections.reverse(temp);
-        this.routeToMe = temp;
-    }
 
     public void setWeight(int weight) {
         this.weight = weight;

@@ -135,8 +135,9 @@ public class DijcstraMap extends javax.swing.JFrame {
 
         finalPointBox.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        startBut.setBackground(new java.awt.Color(51, 51, 255));
+        startBut.setBackground(new java.awt.Color(204, 204, 255));
         startBut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/play.png"))); // NOI18N
+        startBut.setOpaque(false);
         startBut.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         startBut.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -156,18 +157,18 @@ public class DijcstraMap extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(startPointBox, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(finalPointBox, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(23, 23, 23)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
+                            .addComponent(startPointBox, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(finalPointBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(73, 73, 73)
-                        .addComponent(startBut, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 18, Short.MAX_VALUE))
+                        .addGap(47, 47, 47)
+                        .addComponent(startBut)))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,11 +179,11 @@ public class DijcstraMap extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(startPointBox, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(finalPointBox))
-                .addGap(18, 18, 18)
-                .addComponent(startBut, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(65, 65, 65))
+                    .addComponent(finalPointBox, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(startPointBox))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(startBut)
+                .addGap(53, 53, 53))
         );
 
         javax.swing.GroupLayout canvasPanelLayout = new javax.swing.GroupLayout(canvasPanel);
@@ -204,10 +205,7 @@ public class DijcstraMap extends javax.swing.JFrame {
         infoPanel.setLayout(infoPanelLayout);
         infoPanelLayout.setHorizontalGroup(
             infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(infoPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2)
-                .addContainerGap())
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         infoPanelLayout.setVerticalGroup(
             infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -224,7 +222,7 @@ public class DijcstraMap extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(infoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(canvasPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -262,21 +260,27 @@ public class DijcstraMap extends javax.swing.JFrame {
             for (int v=0; v<queue.size(); v++){
                 Vertex currVertex = queue.get(v);
                 for (Edge edge : currVertex.getAdjacentEdges()){
-                    if (!edge.getToWhere().isTagged()){
-                        queue.add(edge.getToWhere());
+                    
+                    Vertex targetV = edge.getToWhere();
+//                    if (targetV.isTagged())
+//                        continue;
+                    
+                    if (!queue.contains(targetV)){
+                        queue.add(targetV);
                     }
                     
-                    if (edge.getToWhere().getWeight() > currVertex.getWeight() + edge.getLength()){
-                        edge.getToWhere().setWeight(currVertex.getWeight() + edge.getLength());
-                        edge.getToWhere().getRouteToMe().clear();
-                        edge.getToWhere().addRouteToMe(currVertex.getRouteToMe())
-                                         .addRouteToMe(Integer.toString(edge.getToWhere().getNumber()));
+                    int newWeight = currVertex.getWeight() + edge.getLength();
+                    
+                    if (targetV.getWeight() > newWeight){
+                        targetV.setWeight(newWeight);
+                        targetV.getRouteToMe().clear();
+                        targetV.addRouteToMe(currVertex.getRouteToMe())
+                               .addRouteToMe(Integer.toString(targetV.getNumber()));
                     }
                 }                
                 currVertex.setTagged(true);
                 System.out.println("FROM " + (start) + " to " + currVertex.getNumber() + ": " + currVertex.getWeight() + "_" + currVertex.getRouteToMe());  
             }
-            
             printToTextPane(start);
             
         }).start();
@@ -301,103 +305,8 @@ public class DijcstraMap extends javax.swing.JFrame {
             resPane.append("FROM " + (start) + " to " + currVertex.getNumber() + ": " + currVertex.getWeight() + "_" + currVertex.getRouteToMe() + '\n');
         });
         
-    }
-    
-//    private void activizeAlgo(int start){
-//        new Thread(()->{
-//            int index = -1;
-//            
-//            Vertex vert = vertList.get(start-1);
-//            vert.setWeight(0);
-//            
-//            
-//            
-//            for(int count=0; count<vertexNum-1; count++){
-//                int min = INF;
-//                for (int i=0; i<vertexNum; i++){
-//                    Vertex point = vertList.get(i);
-//                    if (!point.isTagged() && point.getWeight() < min){
-//                        min = point.getWeight();
-//                        index = i;
-//                    }
-//                }
-//                vertList.get(index).setTagged();
-//                
-//                for (int key=0; key<vertexNum; key++){
-//                    Vertex point2 = vertList.get(key);
-//                    if (point2.isTagged() && point2.getWeight() != INF &&
-//                        vertList.get(index).getWeight() + data[index][key] < point2.getWeight()){
-//                        point2.setWeight(vertList.get(index).getWeight() + data[index][key]);
-//                    }
-//                }
-//            }    
-//            for (int j=0; j<vertexNum; j++){
-//                Vertex v = vertList.get(j);
-//                if (v.getWeight() != INF)
-//                    System.out.println("Vertex " + (j+1) + " weight is " + v.getWeight());
-//                else
-//                    System.out.println("Vertex " + (j+1) + " weight is N/A");
-//            }
-//        }).start();
-//    }
-    
-//    private void activeAlgo(int start){
-//        new Thread(()->{
-//            Vertex startVert = vertList.get(start-1);
-//            startVert.setWeight(0);
-//            queue.add(vertList.get(start-1));
-//            int univSize = 0;
-//            
-//            while(univSize < queue.size()){
-//                Vertex currVertex = queue.get(univSize);
-//                System.out.print("From Vertex " + currVertex.getNumber() + " ");
-//                for (Vertex t : currVertex.getAdjacentVertices()) {
-//                    if (!queue.contains(t) && !t.isTagged()){
-//                        queue.add(t);
-//                    }
-//                
-//                    if (!t.isTagged() && currVertex.getWeight() + data[currVertex.getNumber()-1][t.getNumber()-1] < t.getWeight()){
-//                        t.setWeight(currVertex.getWeight() + data[currVertex.getNumber()-1][t.getNumber()-1]);
-//                        t.addRouteToMe(Integer.toString(currVertex.getNumber()));
-//                        System.out.println("#" + t.getNumber() + " " + t.getWeight() + "_" + t.getRouteToMe());
-//                    }
-//                }
-//                univSize++;
-//            }                 
-//        }).start();
-//    }
-//    
-//    private void algoDijc(int start){
-//        new Thread(()->{
-//            vertList.get(start-1).setWeight(0);
-//            for (int index=0; index<vertexNum; index++){
-//                int vertexInd = -1;
-//                int distVertex = INF;
-//                for (int key=0; key<vertexNum; key++){
-//                    if (vertList.get(key).isTagged() || vertList.get(key).getWeight() > distVertex) 
-//                        continue;
-//                    
-//                    vertexInd = key;
-//                    distVertex = vertList.get(key).getWeight();
-//                }
-//                
-//                for (int key=0; key < vertList.get(vertexInd).getAdjacentVertices().size(); key++){
-//                    int curr = vertList.get(key).getNumber()-1;
-//                    int currWeight = vertList.get(key).getWeight();
-//                    
-//                    if (vertList.get(vertexInd).getWeight() + currWeight < vertList.get(curr).getWeight()){
-//                        vertList.get(curr).setWeight(vertList.get(vertexInd).getWeight() + currWeight);
-//                        vertList.get(curr).addRouteToMe(Integer.toString(vertexInd));
-//                        System.out.println(vertList.get(curr).getWeight() + " " + vertList.get(curr).getRouteToMe());
-//                    }
-//                }
-//                vertList.get(vertexInd).setTagged();
-//            }
-//            
-//        }).start();
-//    }
-    
-    
+    }    
+
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

@@ -65,8 +65,6 @@ public class PrimeCruscalAlgo extends javax.swing.JFrame {
                queue = new ArrayList<>();
     Tree tree = new Tree();
     
-    ArrayList<ArrayList<Integer>> dataList;
-    
     
     public PrimeCruscalAlgo() {
         Mode.ALGO_MODE = false;
@@ -232,6 +230,8 @@ public class PrimeCruscalAlgo extends javax.swing.JFrame {
 
     private void runAlgo(){
         new Thread(()->{
+            prepareAlgo();
+            
             queue = edgeList;
             Collections.sort(queue);
             while(!queue.isEmpty()){
@@ -249,19 +249,7 @@ public class PrimeCruscalAlgo extends javax.swing.JFrame {
     
     private void prepareAlgo(){
         canvas = (CanvasInterf)canvasPanel;
-        
-    }
-    
-    private void dataAsList(){
-        dataList = new ArrayList<>(data.length);
-            for (int i=0; i<data.length; i++){
-                dataList.add(new ArrayList<>());
-                for (int j=0; j<data[i].length; j++){
-                    dataList.get(i).add(data[i][j]);
-                    System.out.print(dataList.get(i).get(j) + "\t");
-                }
-                System.out.println("");
-            }
+        //graph
     }
     
     private void printTree(){
@@ -273,10 +261,6 @@ public class PrimeCruscalAlgo extends javax.swing.JFrame {
         }
         System.out.println(sum);
     }
-    
-
-    
-    
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -302,10 +286,8 @@ public class PrimeCruscalAlgo extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        java.awt.EventQueue.invokeLater(()->{
                 new PrimeCruscalAlgo().setVisible(true);
-            }
         });
     }
 

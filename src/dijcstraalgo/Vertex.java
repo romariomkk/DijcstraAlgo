@@ -1,16 +1,17 @@
 package dijcstraalgo;
 
 import java.util.ArrayList;
-import java.util.Collections;
-
 
 public class Vertex implements Comparable{
+    
     private final int number;
     private ArrayList<String> routeToMe = new ArrayList<>();
     private int weight = Integer.MAX_VALUE;
     private boolean isTagged = false;
     private ArrayList<Vertex> adjacentVertices = new ArrayList<>();
     private ArrayList<Edge> adjacentEdges = new ArrayList<>();
+    
+    static ArrayList<Vertex> vertList = new ArrayList<>();
     
     public Vertex(int number){
         this.number = number;
@@ -44,9 +45,17 @@ public class Vertex implements Comparable{
         return number;
     }
     
+    public static Vertex getByNumber(int number){
+        for (Vertex vert : vertList)
+            if (vert.getNumber() == number)
+                return vert;
+        throw new NullPointerException();
+    }
+    
     public Vertex addRouteToMe(ArrayList<String> routeToMe) {
-        for (String elem : routeToMe)
+        routeToMe.stream().forEach((elem) -> {
             addRouteToMe(elem);
+        });
         return this;
     }
     public Vertex addRouteToMe(String routeToMe) {
@@ -58,8 +67,8 @@ public class Vertex implements Comparable{
         this.weight = weight;
     }
 
-    public void addAdjacentEdge(int weight, Vertex to){
-        adjacentEdges.add(new Edge(weight, to));
+    public void addAdjacentEdge(Edge edge){
+        adjacentEdges.add(edge);
     }
     
     public ArrayList<Edge> getAdjacentEdges(){
@@ -73,7 +82,7 @@ public class Vertex implements Comparable{
 
     @Override
     public int compareTo(Object o) {
-        return ((Vertex)o).getWeight() - this.getWeight();
+        return this.getWeight() - ((Vertex)o).getWeight();
     }
     
 }
